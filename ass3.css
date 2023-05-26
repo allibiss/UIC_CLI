@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css?family=Amiri");
+@import url("https://fonts.googleapis.com/css?family=Sen");
+@import '@sweetalert2/theme-minimal/minimal.scss';
+
+body {
+    background-image: url("../img/back.jpg");
+    background-size: cover;
+    font-size: 14pt;
+    font-family: "Amiri";
+}
+
+.center {
+    text-align: center;
+    margin-top: 2em;
+    padding: 3em;
+}
+
+#back {
+    background: #FFFFFF;
+    padding: 3em;
+    border-radius: 1em;
+    box-shadow: 5px 5px 50px grey;
+}
+
+#par {
+    font-family: "Sen";
+    color: #7B7C7E;
+}
+
+
+#choice_button {
+    background-color: #7E4F9C;
+    border-radius: 1em;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    margin: auto;
+    padding: 7px;
+    margin-bottom: 0.5em;
+    width: 8em;
+}
+
+#command_button,
+#restart {
+    background-color: #6DC1B2;
+    border-radius: 1em;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    margin: auto;
+    padding: 7px;
+    margin-bottom: 0.5em;
+    width: 8em;
+}

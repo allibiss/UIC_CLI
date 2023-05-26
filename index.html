@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+
+<head>
+    <title>Assignment #3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://kit.fontawesome.com/1ec5d28e3c.js" crossorigin="anonymous"></script>
+    <meta name="keywords" content="assignment, 3, cli, interaction, design, user interface">
+    <meta name="description" content="Assignment #3">
+    <meta name="author" content="Sibilla Domiziana Silbano">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="css/ass3.css">
+
+
+    <script>
+        var initial_text = "<b>Order your ID card online now. It's easy, simple and fast!<br>Just type <code>start</code></b>";
+        var chat_text = initial_text;
+        var chat_prompt = [];
+        var chat_answ = [];
+        var chat_mode = false;
+        var prompt_id = 0;
+
+        function clear() {
+            chat_text = initial_text;
+            $("#chat_output").html(chat_text);
+        }
+
+        function start() {
+            return ("<br><br>Welcome<br>Do you want to order an ID card online or perform other tasks?<br>Type <code>1</code>) if you want to order an ID card<br/>Type <code>2</code>) if you want to perform other activities<br>Type <code>3</code>)  if you do not want to perform any of these actions");
+        }
+
+        function PersonalInfos() {
+            Swal.fire({
+                title: "Please enter your first name",
+                input: "text",
+                inputPlaceholder: "Enter your first name here",
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return "You need to write something!"
+                    }
+                },
+            }).then((first) => {
+                if (first.isConfirmed) {
+                    Swal.fire({
+                        title: "Please enter your last name",
+                        input: "text",
+                        inputPlaceholder: "Enter your last name here",
+                        showCancelButton: true,
+                        inputValidator: (value) => {
+                            if (!value) {
+                                return "You need to write something!"
+                            }
+                        },
+                    }).then((last) => {
+                        if (last.isConfirmed) {
+                            chat_text = chat_text + "<br><br>" + `Your  first name is ${first.value} and your last name is ${last.value}?` +
+                                "<br>Type <code>right</code>) to confirm";
+                            $("#command_button").click();
+                        }
+                    })
+                }
+            })
+            $("#chat_output").html(chat_text);
+        }
+
+        function codeID() {
+            Swal.fire({
+                title: "Please enter your date of birth",
+                input: "text",
+                text: "DD-MM-YYYY",
+                inputPlaceholder: "Enter your date of birth here",
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return "You need to write something!"
+                    }
+                },
+            }).then((date) => {
+                if (date.isConfirmed) {
+                    Swal.fire({
+                        title: "Please enter your Finnish ID",
+                        text: "DDMMYYCZZZQ",
+                        input: "text",
+                        inputPlaceholder: "Enter your Finnish ID here",
+                        showCancelButton: true,
+                        inputValidator: (value) => {
+                            if (!value) {
+                                return "You need to write something!"
+                            }
+                        },
+                    }).then((id) => {
+                        if (id.isConfirmed) {
+                            Swal.fire({
+                                title: "Please enter photograph retrieval code",
+                                input: "text",
+                                inputPlaceholder: "Enter your photograph retrieval code here",
+                                showCancelButton: true,
+                                inputValidator: (value) => {
+                                    if (!value) {
+                                        return "You need to write something!"
+                                    }
+                                },
+                            }).then((code) => {
+                                if (code.isConfirmed) {
+                                    chat_text = chat_text + "<br><br>" + `Your  date of birth is ${date.value}, your Finnish ID is ${id.value} and your photograph retrieval code is ${code.value}?` +
+                                        "<br>Type <code>correct</code>) to confirm";
+                                    $("#command_button").click();
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+            $("#chat_output").html(chat_text);
+        }
+
+        function bank() {
+            Swal.fire({
+                title: "Please enter your banking ID",
+                input: "text",
+                inputPlaceholder: "Enter your banking ID here",
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return "You need to write something!"
+                    }
+                },
+            }).then((bank) => {
+                if (bank.isConfirmed) {
+                    chat_text = chat_text + "<br><br>" + `Your  certificate card ID ${bank.value}` +
+                        "<br>Type <code>exact</code>) to confirm";
+                    $("#command_button").click();
+                }
+            })
+            $("#chat_output").html(chat_text);
+        }
+
+        function certificate() {
+            Swal.fire({
+                title: "Please enter your certificate card ID",
+                input: "text",
+                inputPlaceholder: "Enter your certificate card ID here",
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return "You need to write something!"
+                    }
+                },
+            }).then((cert) => {
+                if (cert.isConfirmed) {
+                    chat_text = chat_text + "<br><br>" + `Your  certificate card ID ${cert.value}` +
+                        "<br>Type <code>exact</code>) to confirm";
+                    $("#command_button").click();
+                }
+            })
+            $("#chat_output").html(chat_text);
+        }
+
+        function mobile() {
+            Swal.fire({
+                title: "Please enter your mobile ID",
+                input: "text",
+                inputPlaceholder: "Enter your mobile ID here",
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return "You need to write something!"
+                    }
+                },
+            }).then((mobile) => {
+                if (mobile.isConfirmed) {
+                    chat_text = chat_text + "<br><br>" + `Your  certificate card ID ${mobile.value}` +
+                        "<br>Type <code>exact</code>) to confirm";
+                    $("#command_button").click();
+                }
+            })
+            $("#chat_output").html(chat_text);
+        }
+
+        function confirm() {
+            Swal.fire({
+                title: "Can you participate in an eventual official online recognition meeting?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, I can!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        "Great! You have entered all the information needed to obtain an ID card",
+                        "",
+                        "success"
+                    )
+                    chat_text = chat_text + "<br><br>You have agreed to participate in a possible official online recognition meeting.";
+                    type();
+                    $("#command_button").click();
+                }
+            })
+            $("#chat_output").html(chat_text);
+        }
+
+        function type() {
+            chat_text = chat_text + "<br><br>We are almost done.<br>Would you like a digital ID card or would you like it sent to you?<br>" +
+                "Type <code>digital</code>) if you want a digital ID card<br/>" +
+                "Type <code>physical</code>) if you want a physical ID card";
+        }
+
+        function main_loop(command) {
+            chat_text = chat_text + "<br/>> " + command;
+            var cmd = command.split(" ");
+
+            if (chat_mode) {
+                chat(command);
+            } else {
+
+                switch (cmd[0]) {
+                    case "start":
+                        chat_text = chat_text + " " + start();
+                        break;
+
+                    case "1":
+                        PersonalInfos();
+                        break;
+
+                    case "2":
+                        chat_text = chat_text + "<br><br>What activity do you want to perform?<br>" +
+                            "Type <code>change</code>) if you want to change your ID card data<br>" +
+                            "Type <code>see</code>) if you want to see the status of your ID card<br>" +
+                            "Type <code>exit</code>) if you do not want to perform any of these actions";
+                        break;
+
+                    case "change":
+                        chat_text = chat_text + "<br><br>You will receive a notification with all the necessary information!"
+                        break;
+
+                    case "see":
+                        chat_text = chat_text + "<br><br>You will receive a notification with all the necessary information!"
+                        break;
+
+                    case "exit":
+                        chat_text = chat_text + "<br><br><b>Okay. Goodbye!</b>";
+                        break;
+
+                    case "3":
+                        chat_text = chat_text + "<br><br><b>Okay. Goodbye!</b>";
+                        break;
+
+                    case "right":
+                        codeID();
+                        break;
+
+                    case "correct":
+                        chat_text = chat_text + '<br><br>Which identification do you choose:';
+                        chat_text = chat_text + '<br><button id="choice_button" onclick="bank()">banking ID</button> ';
+                        chat_text = chat_text + '<button id="choice_button" onclick="certificate()"> certificate card</button> ';
+                        chat_text = chat_text + '<button id="choice_button" onclick="mobile()">mobile ID</button>';
+                        break;
+
+                    case "exact":
+                        confirm();
+                        break;
+
+                    case "digital":
+                        chat_text = chat_text + "<br><br>Great we are done!<br>" +
+                            "You will receive a receipt by email with the payment <br> which you must make within a week, <br> after that we will inform you if an online meeting is necessary.<br><br>" +
+                            "In two weeks you will get your ID card!";
+                        break;
+
+                    case "physical":
+                        chat_text = chat_text + "<br><br>Great we are done!<br>" +
+                            "You will receive a receipt by email with the payment <br> which you must make within a week, <br> after that we will inform you if an online meeting is necessary.<br><br>" +
+                            "In two weeks you will get your ID card!";
+                        break;
+
+                    case "help":
+                        chat_text = chat_text + " " + start();
+                        break;
+
+                    case "?":
+                        chat_text = chat_text + " " + start();
+                        break;
+
+                    default:
+                        start();
+                        break;
+                }
+            }
+            $("#chat_output").html(chat_text);
+            return;
+        }
+
+
+        $(document).ready(function () {
+
+            $("#chat_output").html(chat_text);
+
+            $("#command_button").click(function () {
+                main_loop($("#command").val());
+                $("#command").val('');
+            });
+
+            $("#command").keyup(function (event) {
+                if (event.keyCode === 13) {
+                    $("#command_button").click();
+                }
+            });
+
+            $("#restart").click(function () {
+                clear();
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <section class="container center">
+        <div class="row justify-content-md-center" id="back">
+            <div class="w3-container">
+                <div class="w3-border w3-panel">
+                    <div id="chat_div">
+                        <p id="chat_output"></p>
+                    </div>
+                </div>
+                <p>
+                    <span>> </span><input type="text" id="command"><br><br>
+                    <button type="submit" id="command_button">Submit</button>
+                    <button id="restart">Clear</button>
+                </p>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
